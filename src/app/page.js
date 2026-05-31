@@ -1,21 +1,25 @@
 export default function Home() {
-  const services = [
-    ["🚀", "Web Development", "Modern business websites and web apps."],
-    ["📱", "App Development", "Android, Flutter and mobile-first solutions."],
-    ["🏢", "ERP Software", "College ERP, fees, library and admin systems."],
-    ["🤖", "AI Solutions", "AI tools, automation and smart applications."],
-    ["☁️", "Cloud Deployment", "Vercel, Render, MongoDB and hosting setup."],
-    ["🎓", "Internships", "Project-based IT internship programs."],
-  ];
+const services = [
+  ["🌐", "Website Development", "Modern business websites and web applications."],
+  ["📱", "Mobile App Development", "Android, Flutter and cross-platform applications."],
+  ["💻", "Software Development", "Custom software solutions for startups and businesses."],
+  ["🏢", "ERP / CRM Solutions", "College ERP, CRM and business automation systems."],
+  ["🤖", "AI & Automation Projects", "AI tools, automation and smart solutions."],
+  ["☁️", "Cloud Deployment", "Vercel, Render, MongoDB and cloud hosting."],
+  ["🎓", "Student Internship & Live Projects", "Industry-focused internship programs."],
+  ["📘", "Final Year Project Guidance", "Project mentoring and implementation support."],
+];
 
-  const projects = [
-    "College ERP System",
-    "KrushiMitra AI",
-    "Turf Booking Platform",
-    "Placement Portal",
-    "Library Management System",
-    "Fee Payment Software",
-  ];
+ const projects = [
+  "College ERP System",
+  "Turf Booking Website",
+  "Hostel Room Booking Portal",
+  "AI Resume Analyzer",
+  "KrushiMitra AI",
+  "Placement Development Club Website",
+  "Business Portfolio Websites",
+  "E-Commerce Platforms",
+];
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#020617] text-white">

@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function Home() {
   const services = [
     ["🌐", "Website Development", "Modern business websites and web applications."],
@@ -22,12 +26,23 @@ export default function Home() {
   ];
 
   const technologies = [
-    "React", "Next.js", "Node.js", "MongoDB", "Flutter", "Python", "PHP", "MySQL", "AI/ML", "Vercel",
+    "React", "Next.js", "Node.js", "MongoDB", "Flutter",
+    "Python", "PHP", "MySQL", "AI/ML", "Vercel",
   ];
+
+  const fadeUp = {
+    hidden: { opacity: 0, y: 45 },
+    visible: { opacity: 1, y: 0 },
+  };
+
+  const cardAnimation = {
+    hidden: { opacity: 0, scale: 0.92 },
+    visible: { opacity: 1, scale: 1 },
+  };
 
   return (
     <main className="min-h-screen overflow-hidden bg-[#020617] text-white">
-      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#020617]/80 backdrop-blur-xl">
+      <nav className="fixed top-0 z-50 w-full border-b border-white/10 bg-[#020617]/70 backdrop-blur-2xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div>
             <h1 className="text-2xl font-black tracking-tight">
@@ -44,43 +59,88 @@ export default function Home() {
             <a href="#contact" className="hover:text-cyan-400">Contact</a>
           </div>
 
-          <a href="/apply" className="rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-2 text-sm font-bold text-black">
+          <a
+            href="/apply"
+            className="rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-2 text-sm font-bold text-black shadow-lg shadow-cyan-400/30 hover:shadow-cyan-400/60"
+          >
             Apply Now
           </a>
         </div>
       </nav>
 
       <section className="relative min-h-screen px-6 pt-32">
-        <div className="absolute left-[-120px] top-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl"></div>
-        <div className="absolute right-[-120px] top-40 h-96 w-96 rounded-full bg-purple-600/20 blur-3xl"></div>
+        <div className="absolute left-[-120px] top-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute right-[-120px] top-40 h-96 w-96 rounded-full bg-purple-600/20 blur-3xl" />
+
+        <motion.div
+          animate={{ x: [0, 30, 0], y: [0, 35, 0] }}
+          transition={{ duration: 8, repeat: Infinity }}
+          className="absolute left-24 top-36 h-40 w-40 rounded-full bg-cyan-400/20 blur-3xl"
+        />
+
+        <motion.div
+          animate={{ x: [0, -25, 0], y: [0, -30, 0] }}
+          transition={{ duration: 10, repeat: Infinity }}
+          className="absolute bottom-28 right-24 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl"
+        />
 
         <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2">
           <div>
-            <div className="mb-6 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.6 }}
+              className="mb-6 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-300"
+            >
               Building Smart Digital Solutions for the Future
-            </div>
+            </motion.div>
 
-            <h2 className="mb-6 text-5xl font-black leading-tight md:text-7xl">
+            <motion.h2
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="mb-6 text-5xl font-black leading-tight md:text-7xl"
+            >
               Innovating Digital Solutions For
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
                 {" "}Businesses & Students
               </span>
-            </h2>
+            </motion.h2>
 
-            <p className="mb-8 max-w-xl text-lg leading-8 text-slate-300">
+            <motion.p
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 0.9, delay: 0.25 }}
+              className="mb-8 max-w-xl text-lg leading-8 text-slate-300"
+            >
               We provide professional software development, website development,
               mobile app solutions, ERP systems, AI-based automation and
               industry-focused internship programs for students.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap gap-4">
-              <a href="/apply" className="rounded-2xl bg-cyan-400 px-8 py-4 font-bold text-black hover:bg-cyan-300">
+            <motion.div
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{ duration: 1, delay: 0.35 }}
+              className="flex flex-wrap gap-4"
+            >
+              <a
+                href="/apply"
+                className="rounded-2xl bg-cyan-400 px-8 py-4 font-bold text-black shadow-lg shadow-cyan-400/30 hover:bg-cyan-300 hover:shadow-cyan-400/60"
+              >
                 Apply Internship
               </a>
-              <a href="#services" className="rounded-2xl border border-white/20 px-8 py-4 font-bold hover:border-cyan-400 hover:text-cyan-400">
+              <a
+                href="#services"
+                className="rounded-2xl border border-white/20 px-8 py-4 font-bold hover:border-cyan-400 hover:text-cyan-400"
+              >
                 Explore Services
               </a>
-            </div>
+            </motion.div>
 
             <div className="mt-12 grid grid-cols-3 gap-4">
               {[
@@ -88,15 +148,26 @@ export default function Home() {
                 ["1000+", "Students"],
                 ["15+", "Technologies"],
               ].map(([num, text]) => (
-                <div key={text} className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                <motion.div
+                  key={text}
+                  whileHover={{ scale: 1.08, y: -5 }}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-cyan-500/5"
+                >
                   <h3 className="text-3xl font-black text-cyan-400">{num}</h3>
                   <p className="text-sm text-slate-400">{text}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl">
+          <motion.div
+            variants={cardAnimation}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            whileHover={{ scale: 1.03, rotate: 1 }}
+            className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-2xl shadow-cyan-500/10 backdrop-blur-xl"
+          >
             <div className="rounded-[1.5rem] bg-gradient-to-br from-cyan-500/20 via-blue-500/10 to-purple-600/20 p-8">
               <p className="mb-4 text-sm text-cyan-300">Company Dashboard</p>
               <h3 className="mb-8 text-3xl font-black">Rudraksh Infotech</h3>
@@ -108,14 +179,20 @@ export default function Home() {
                   "ERP / CRM Projects",
                   "Cloud Deployment Ready",
                 ].map((item) => (
-                  <div key={item} className="flex items-center justify-between rounded-2xl bg-black/30 p-4">
+                  <motion.div
+                    key={item}
+                    whileHover={{ x: 8 }}
+                    className="flex items-center justify-between rounded-2xl bg-black/30 p-4"
+                  >
                     <span>{item}</span>
-                    <span className="rounded-full bg-green-400/20 px-3 py-1 text-xs text-green-300">Live</span>
-                  </div>
+                    <span className="rounded-full bg-green-400/20 px-3 py-1 text-xs text-green-300">
+                      Live
+                    </span>
+                  </motion.div>
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -128,11 +205,20 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-4">
             {services.map(([icon, title, desc]) => (
-              <div key={title} className="rounded-3xl border border-white/10 bg-white/[0.04] p-7 transition hover:-translate-y-2 hover:border-cyan-400/70">
+              <motion.div
+                key={title}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 1.05, y: -10 }}
+                className="rounded-3xl border border-white/10 bg-white/[0.04] p-7 shadow-xl shadow-cyan-500/5 hover:border-cyan-400/70 hover:bg-cyan-400/10"
+              >
                 <div className="mb-5 text-4xl">{icon}</div>
                 <h3 className="mb-3 text-xl font-bold">{title}</h3>
                 <p className="text-sm text-slate-400">{desc}</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -140,7 +226,7 @@ export default function Home() {
 
       <section id="about" className="bg-white/[0.03] px-6 py-24">
         <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-2">
-          <div>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
             <p className="mb-3 text-cyan-400">About Us</p>
             <h2 className="mb-6 text-4xl font-black">Who We Are</h2>
             <p className="leading-8 text-slate-300">
@@ -149,14 +235,18 @@ export default function Home() {
               We work on websites, mobile applications, ERP systems, automation tools,
               and student internship programs.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-4 sm:grid-cols-2">
             {["Professional Team", "Live Projects", "Student Training", "Business Solutions"].map((item) => (
-              <div key={item} className="rounded-2xl border border-white/10 bg-[#0f172a] p-6">
+              <motion.div
+                key={item}
+                whileHover={{ scale: 1.05 }}
+                className="rounded-2xl border border-white/10 bg-[#0f172a] p-6"
+              >
                 <h3 className="text-xl font-bold text-cyan-300">{item}</h3>
                 <p className="mt-2 text-sm text-slate-400">Quality-focused IT solutions and practical learning.</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -178,9 +268,13 @@ export default function Home() {
               "Interview Preparation",
               "Modern Technology Stack",
             ].map((item) => (
-              <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <motion.div
+                key={item}
+                whileHover={{ scale: 1.04, y: -6 }}
+                className="rounded-2xl border border-white/10 bg-white/[0.04] p-6"
+              >
                 <h3 className="text-xl font-bold text-cyan-300">✓ {item}</h3>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -193,9 +287,13 @@ export default function Home() {
 
           <div className="flex flex-wrap justify-center gap-4">
             {technologies.map((tech) => (
-              <span key={tech} className="rounded-full border border-white/10 bg-[#0f172a] px-6 py-3 text-slate-300">
+              <motion.span
+                key={tech}
+                whileHover={{ scale: 1.1, y: -4 }}
+                className="rounded-full border border-white/10 bg-[#0f172a] px-6 py-3 text-slate-300 hover:border-cyan-400/60 hover:text-cyan-300"
+              >
                 {tech}
-              </span>
+              </motion.span>
             ))}
           </div>
         </div>
@@ -213,13 +311,17 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-4">
             {["Web Development", "Python Programming", "App Development", "AI & Machine Learning", "PHP & MySQL", "Full Stack Development", "UI/UX Design", "Cloud Basics"].map((item) => (
-              <div key={item} className="rounded-3xl border border-white/10 bg-[#0f172a] p-6">
+              <motion.div
+                key={item}
+                whileHover={{ scale: 1.05, y: -8 }}
+                className="rounded-3xl border border-white/10 bg-[#0f172a] p-6 shadow-lg shadow-purple-500/5"
+              >
                 <h3 className="mb-3 text-xl font-bold text-cyan-300">{item}</h3>
                 <p className="mb-5 text-sm text-slate-400">Live project work, mentorship and certificate.</p>
                 <a href="/apply" className="inline-block rounded-xl bg-white px-5 py-2 text-sm font-bold text-black hover:bg-cyan-300">
                   Apply Now
                 </a>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -234,9 +336,13 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-5">
             {["Live Project Work", "Certificate", "Project Guidance", "Resume Support", "Interview Preparation"].map((item) => (
-              <div key={item} className="rounded-2xl border border-white/10 bg-[#0f172a] p-6 text-center">
+              <motion.div
+                key={item}
+                whileHover={{ scale: 1.06 }}
+                className="rounded-2xl border border-white/10 bg-[#0f172a] p-6 text-center"
+              >
                 <h3 className="font-bold text-cyan-300">{item}</h3>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -251,12 +357,16 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-4">
             {["Web Developer Intern", "Python Intern", "Flutter Intern", "UI/UX Intern"].map((role) => (
-              <div key={role} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6">
+              <motion.div
+                key={role}
+                whileHover={{ scale: 1.05, y: -8 }}
+                className="rounded-3xl border border-white/10 bg-white/[0.04] p-6"
+              >
                 <h3 className="mb-4 text-xl font-bold">{role}</h3>
                 <a href="/apply" className="inline-block rounded-xl bg-cyan-400 px-5 py-2 font-bold text-black">
                   Apply
                 </a>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -271,18 +381,25 @@ export default function Home() {
 
           <div className="grid gap-6 md:grid-cols-4">
             {projects.map((project) => (
-              <div key={project} className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.03] p-7">
-                <div className="mb-6 h-32 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-purple-500/20"></div>
+              <motion.div
+                key={project}
+                whileHover={{ scale: 1.05, rotateY: 5 }}
+                className="rounded-3xl border border-white/10 bg-gradient-to-br from-white/10 to-white/[0.03] p-7"
+              >
+                <div className="mb-6 h-32 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-purple-500/20" />
                 <h3 className="text-xl font-bold">{project}</h3>
                 <p className="mt-3 text-sm text-slate-400">Professional software solution built with modern technologies.</p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       <section className="px-6 py-24">
-        <div className="mx-auto max-w-7xl rounded-[2rem] bg-gradient-to-r from-cyan-400 to-blue-600 p-10 text-black md:p-16">
+        <motion.div
+          whileHover={{ scale: 1.02 }}
+          className="mx-auto max-w-7xl rounded-[2rem] bg-gradient-to-r from-cyan-400 to-blue-600 p-10 text-black shadow-2xl shadow-cyan-500/20 md:p-16"
+        >
           <div className="grid items-center gap-8 md:grid-cols-2">
             <div>
               <h2 className="text-4xl font-black md:text-5xl">Ready to Launch Your Digital Product?</h2>
@@ -292,7 +409,7 @@ export default function Home() {
               <a href="#contact" className="inline-block rounded-2xl bg-black px-8 py-4 font-bold text-white">Contact Now</a>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       <section id="contact" className="px-6 py-24">

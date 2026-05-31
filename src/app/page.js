@@ -69,11 +69,11 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4">
               <a
-                href="#internship"
-                className="rounded-2xl bg-cyan-400 px-8 py-4 font-bold text-black shadow-xl shadow-cyan-500/30 hover:bg-cyan-300"
-              >
-                Apply Internship
-              </a>
+  href="/apply"
+  className="rounded-2xl bg-cyan-400 px-8 py-4 font-bold text-black shadow-xl shadow-cyan-500/30 hover:bg-cyan-300"
+>
+  Apply Internship
+</a>
               <a
                 href="#services"
                 className="rounded-2xl border border-white/20 px-8 py-4 font-bold hover:border-cyan-400 hover:text-cyan-400"
@@ -167,9 +167,12 @@ export default function Home() {
                   <p className="mb-5 text-sm text-slate-400">
                     Practical tasks, live project and certificate.
                   </p>
-                  <button className="rounded-xl bg-white px-5 py-2 text-sm font-bold text-black">
-                    Apply Now
-                  </button>
+                  <a
+  href="/apply"
+  className="inline-block rounded-xl bg-white px-5 py-2 text-sm font-bold text-black hover:bg-cyan-300"
+>
+  Apply Now
+</a>
                 </div>
               )
             )}

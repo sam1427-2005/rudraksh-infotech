@@ -1,20 +1,18 @@
+import { headers } from "next/headers";
+
 async function getApplications() {
   try {
-    const res = await fetch("http://localhost:3000/api/applications", {
+    const headersList = await headers();
+    const host = headersList.get("host");
+    const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
+
+    const res = await fetch(`${protocol}://${host}/api/applications`, {
       cache: "no-store",
     });
 
-    if (!res.ok) {
-      return [];
-    }
+    if (!res.ok) return [];
 
-    const text = await res.text();
-
-    if (!text) {
-      return [];
-    }
-
-    const data = JSON.parse(text);
+    const data = await res.json();
     return data.applications || [];
   } catch (error) {
     return [];
@@ -44,12 +42,16 @@ export default async function AdminApplications() {
           </div>
 
           <div className="rounded-2xl bg-white/5 p-6">
-            <h2 className="text-3xl font-bold text-yellow-400">Pending</h2>
+            <h2 className="text-3xl font-bold text-yellow-400">
+              Pending
+            </h2>
             <p className="text-slate-400">Application Status</p>
           </div>
 
           <div className="rounded-2xl bg-white/5 p-6">
-            <h2 className="text-3xl font-bold text-green-400">Live</h2>
+            <h2 className="text-3xl font-bold text-green-400">
+              Live
+            </h2>
             <p className="text-slate-400">System Status</p>
           </div>
         </div>
@@ -77,7 +79,7 @@ export default async function AdminApplications() {
               ) : (
                 applications.map((app) => (
                   <tr
-                    key={app._id || app.id}
+                    key={app._id}
                     className="border-t border-white/10"
                   >
                     <td className="p-4">{app.name}</td>
@@ -94,13 +96,6 @@ export default async function AdminApplications() {
             </tbody>
           </table>
         </div>
-
-        {applications.length === 0 && (
-          <p className="mt-6 text-sm text-red-300">
-            MongoDB connection pending. Use mobile hotspot or deploy on Vercel
-            with MongoDB environment variables.
-          </p>
-        )}
       </div>
     </main>
   );

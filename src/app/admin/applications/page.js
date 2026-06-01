@@ -2,6 +2,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 import { headers } from "next/headers";
+import StatusUpdater from "./StatusUpdater";
 
 async function getApplications() {
   try {
@@ -27,55 +28,32 @@ export default async function AdminApplications() {
   const applications = await getApplications();
 
   const totalApplications = applications.length;
-  const totalApproved = applications.filter(
-    (app) => app.status === "Approved"
-  ).length;
-  const totalRejected = applications.filter(
-    (app) => app.status === "Rejected"
-  ).length;
-  const totalPending = applications.filter(
-    (app) => !app.status || app.status === "Pending"
-  ).length;
+  const totalApproved = applications.filter((app) => app.status === "Approved").length;
+  const totalRejected = applications.filter((app) => app.status === "Rejected").length;
+  const totalPending = applications.filter((app) => !app.status || app.status === "Pending").length;
 
-  const domains = [
-    ...new Set(applications.map((app) => app.domain).filter(Boolean)),
-  ];
+  const domains = [...new Set(applications.map((app) => app.domain).filter(Boolean))];
 
   return (
     <main className="min-h-screen bg-[#020617] px-4 py-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8 flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <p className="mb-2 text-sm font-semibold text-cyan-400">
-              Rudraksh Infotech Admin
-            </p>
-            <h1 className="text-3xl font-black text-white sm:text-4xl">
-              Internship Applications
-            </h1>
+            <p className="mb-2 text-sm font-semibold text-cyan-400">Rudraksh Infotech Admin</p>
+            <h1 className="text-3xl font-black text-white sm:text-4xl">Internship Applications</h1>
             <p className="mt-2 text-sm text-slate-400 sm:text-base">
               Manage applications, status, exports and enquiries.
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a
-              href="/admin/enquiries"
-              className="rounded-xl bg-purple-500 px-5 py-3 text-center font-bold text-white hover:bg-purple-400"
-            >
+            <a href="/admin/enquiries" className="rounded-xl bg-purple-500 px-5 py-3 text-center font-bold text-white hover:bg-purple-400">
               View Enquiries
             </a>
-
-            <a
-              href="/api/export/excel"
-              className="rounded-xl bg-green-400 px-5 py-3 text-center font-bold text-black hover:bg-green-300"
-            >
+            <a href="/api/export/excel" className="rounded-xl bg-green-400 px-5 py-3 text-center font-bold text-black hover:bg-green-300">
               Export Excel
             </a>
-
-            <a
-              href="/api/export/pdf"
-              className="rounded-xl bg-cyan-400 px-5 py-3 text-center font-bold text-black hover:bg-cyan-300"
-            >
+            <a href="/api/export/pdf" className="rounded-xl bg-cyan-400 px-5 py-3 text-center font-bold text-black hover:bg-cyan-300">
               Export PDF
             </a>
           </div>
@@ -83,30 +61,19 @@ export default async function AdminApplications() {
 
         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl border border-white/10 bg-cyan-500/10 p-5">
-            <h2 className="text-3xl font-black text-cyan-400">
-              {totalApplications}
-            </h2>
+            <h2 className="text-3xl font-black text-cyan-400">{totalApplications}</h2>
             <p className="text-sm text-slate-400">Total Applications</p>
           </div>
-
           <div className="rounded-2xl border border-white/10 bg-yellow-500/10 p-5">
-            <h2 className="text-3xl font-black text-yellow-400">
-              {totalPending}
-            </h2>
+            <h2 className="text-3xl font-black text-yellow-400">{totalPending}</h2>
             <p className="text-sm text-slate-400">Pending</p>
           </div>
-
           <div className="rounded-2xl border border-white/10 bg-green-500/10 p-5">
-            <h2 className="text-3xl font-black text-green-400">
-              {totalApproved}
-            </h2>
+            <h2 className="text-3xl font-black text-green-400">{totalApproved}</h2>
             <p className="text-sm text-slate-400">Approved</p>
           </div>
-
           <div className="rounded-2xl border border-white/10 bg-red-500/10 p-5">
-            <h2 className="text-3xl font-black text-red-400">
-              {totalRejected}
-            </h2>
+            <h2 className="text-3xl font-black text-red-400">{totalRejected}</h2>
             <p className="text-sm text-slate-400">Rejected</p>
           </div>
         </div>
@@ -118,22 +85,14 @@ export default async function AdminApplications() {
             className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base"
           />
 
-          <select
-            id="domainFilter"
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base"
-          >
+          <select id="domainFilter" className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base">
             <option value="">All Domains</option>
             {domains.map((domain) => (
-              <option key={domain} value={domain}>
-                {domain}
-              </option>
+              <option key={domain} value={domain}>{domain}</option>
             ))}
           </select>
 
-          <select
-            id="statusFilter"
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base"
-          >
+          <select id="statusFilter" className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base">
             <option value="">All Status</option>
             <option value="Pending">Pending</option>
             <option value="Approved">Approved</option>
@@ -194,28 +153,7 @@ export default async function AdminApplications() {
                     </td>
 
                     <td className="p-4">
-                      <form
-                        action={`/admin/applications/${app._id}/status`}
-                        method="POST"
-                        className="flex gap-2"
-                      >
-                        <select
-                          name="status"
-                          defaultValue={app.status || "Pending"}
-                          className="rounded-lg bg-slate-800 px-3 py-2 text-sm text-white"
-                        >
-                          <option value="Pending">Pending</option>
-                          <option value="Approved">Approved</option>
-                          <option value="Rejected">Rejected</option>
-                        </select>
-
-                        <button
-                          type="submit"
-                          className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black hover:bg-cyan-300"
-                        >
-                          Save
-                        </button>
-                      </form>
+                      <StatusUpdater id={app._id} currentStatus={app.status || "Pending"} />
                     </td>
                   </tr>
                 ))
@@ -244,16 +182,11 @@ export default async function AdminApplications() {
                   const rowDomain = row.dataset.domain;
                   const rowStatus = row.dataset.status;
 
-                  const matchesSearch =
-                    name.includes(search) ||
-                    email.includes(search) ||
-                    phone.includes(search);
-
+                  const matchesSearch = name.includes(search) || email.includes(search) || phone.includes(search);
                   const matchesDomain = !domain || rowDomain === domain;
                   const matchesStatus = !status || rowStatus === status;
 
-                  row.style.display =
-                    matchesSearch && matchesDomain && matchesStatus ? "" : "none";
+                  row.style.display = matchesSearch && matchesDomain && matchesStatus ? "" : "none";
                 });
               }
 

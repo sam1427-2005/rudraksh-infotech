@@ -2,22 +2,23 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Application from "@/models/Application";
 
-export async function POST(req, context) {
+export async function PATCH(req, context) {
   try {
     await connectDB();
 
-    const params = await context.params;
-    const id = params.id;
+    const { id } = await context.params;
+    const { status } = await req.json();
 
-    const formData = await req.formData();
-    const status = formData.get("status");
-
-    await Application.updateOne(
-      { _id: id },
-      { $set: { status: status } }
+    const application = await Application.findByIdAndUpdate(
+      id,
+      { $set: { status } },
+      { new: true }
     );
 
-    return NextResponse.redirect(new URL("/admin/applications", req.url));
+    return NextResponse.json({
+      success: true,
+      application,
+    });
   } catch (error) {
     return NextResponse.json(
       { success: false, error: error.message },

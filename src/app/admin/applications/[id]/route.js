@@ -3,15 +3,13 @@ import mongoose from "mongoose";
 import { connectDB } from "@/lib/mongodb";
 import Application from "@/models/Application";
 
-async function updateStatus(req, context) {
+export async function PATCH(req, context) {
   try {
     await connectDB();
 
-    const params = await context.params;
-    const id = params.id;
-
-    const formData = await req.formData();
-    const status = formData.get("status");
+    const { id } = await context.params;
+    const body = await req.json();
+    const status = body.status;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
@@ -29,7 +27,7 @@ async function updateStatus(req, context) {
 
     const application = await Application.findByIdAndUpdate(
       id,
-      { status },
+      { $set: { status } },
       { new: true, runValidators: true }
     );
 
@@ -42,6 +40,7 @@ async function updateStatus(req, context) {
 
     return NextResponse.json({
       success: true,
+      message: "Status updated successfully",
       application,
     });
   } catch (error) {
@@ -50,12 +49,4 @@ async function updateStatus(req, context) {
       { status: 500 }
     );
   }
-}
-
-export async function POST(req, context) {
-  return updateStatus(req, context);
-}
-
-export async function PATCH(req, context) {
-  return updateStatus(req, context);
 }

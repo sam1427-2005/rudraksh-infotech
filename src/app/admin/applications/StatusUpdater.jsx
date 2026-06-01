@@ -10,17 +10,26 @@ export default function StatusUpdater({ id, currentStatus }) {
     setLoading(true);
 
     try {
-      const formData = new FormData();
-      formData.append("status", status);
-
       const res = await fetch(`/api/applications/${id}/status`, {
-        method: "POST",
-        body: formData,
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      console.log("STATUS API RESPONSE:", text);
 
-      if (!data.success) {
+      if (!text) {
+        alert("Empty response from server. Check Vercel logs.");
+        setLoading(false);
+        return;
+      }
+
+      const data = JSON.parse(text);
+
+      if (!res.ok || !data.success) {
         alert(data.error || "Status update failed");
         setLoading(false);
         return;
@@ -53,7 +62,7 @@ export default function StatusUpdater({ id, currentStatus }) {
         type="button"
         onClick={updateStatus}
         disabled={loading}
-        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black disabled:opacity-60"
+        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black"
       >
         {loading ? "Saving..." : "Save"}
       </button>

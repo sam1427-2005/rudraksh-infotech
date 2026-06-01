@@ -27,8 +27,12 @@ export default async function AdminApplications() {
   const applications = await getApplications();
 
   const totalApplications = applications.length;
-  const totalApproved = applications.filter((app) => app.status === "Approved").length;
-  const totalRejected = applications.filter((app) => app.status === "Rejected").length;
+  const totalApproved = applications.filter(
+    (app) => app.status === "Approved"
+  ).length;
+  const totalRejected = applications.filter(
+    (app) => app.status === "Rejected"
+  ).length;
   const totalPending = applications.filter(
     (app) => !app.status || app.status === "Pending"
   ).length;
@@ -138,7 +142,7 @@ export default async function AdminApplications() {
         </div>
 
         <div className="overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.04]">
-          <table className="w-full min-w-[1050px] text-left">
+          <table className="w-full min-w-[950px] text-left">
             <thead className="bg-white/10 text-sm text-slate-300">
               <tr>
                 <th className="p-4">Name</th>
@@ -148,14 +152,13 @@ export default async function AdminApplications() {
                 <th className="p-4">Domain</th>
                 <th className="p-4">Status</th>
                 <th className="p-4">Update Status</th>
-                <th className="p-4">Actions</th>
               </tr>
             </thead>
 
             <tbody>
               {applications.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="p-8 text-center text-slate-400">
+                  <td colSpan="7" className="p-8 text-center text-slate-400">
                     No Applications Found
                   </td>
                 </tr>
@@ -213,46 +216,6 @@ export default async function AdminApplications() {
                           Save
                         </button>
                       </form>
-                    </td>
-
-                    <td className="p-4">
-                      <div className="flex flex-wrap gap-2">
-                        <form
-                          action={`/admin/applications/${app._id}/approve`}
-                          method="POST"
-                        >
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white hover:bg-green-400"
-                          >
-                            Approve
-                          </button>
-                        </form>
-
-                        <form
-                          action={`/admin/applications/${app._id}/reject`}
-                          method="POST"
-                        >
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black hover:bg-yellow-400"
-                          >
-                            Reject
-                          </button>
-                        </form>
-
-                        <form
-                          action={`/admin/applications/${app._id}/delete`}
-                          method="POST"
-                        >
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white hover:bg-red-400"
-                          >
-                            Delete
-                          </button>
-                        </form>
-                      </div>
                     </td>
                   </tr>
                 ))

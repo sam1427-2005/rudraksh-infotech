@@ -6,13 +6,16 @@ export async function POST(req, context) {
   try {
     await connectDB();
 
-    const { id } = await context.params;
+    const params = await context.params;
+    const id = params.id;
+
     const formData = await req.formData();
     const status = formData.get("status");
 
-    await Application.findByIdAndUpdate(id, {
-      $set: { status },
-    });
+    await Application.updateOne(
+      { _id: id },
+      { $set: { status: status } }
+    );
 
     return NextResponse.redirect(new URL("/admin/applications", req.url));
   } catch (error) {

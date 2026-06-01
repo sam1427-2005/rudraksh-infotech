@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ContactForm from "./ContactForm";
 
 export default function Home() {
   const services = [
@@ -435,21 +436,11 @@ export default function Home() {
               <p>📧 info@rudrakshinfotech.in</p>
               <p>🎓 internship@rudrakshinfotech.in</p>
               <p>📞 +91 7887627842</p>
-              <p>📍 Maharashtra, India</p>
+              <p>📍 Kolhapur,Maharashtra, India</p>
             </div>
           </div>
 
-          <form className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 sm:p-8">
-            <input className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Full Name" />
-            <input className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Email Address" />
-            <input className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Phone Number" />
-            <input className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Service / Internship Domain" />
-            <textarea className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" rows="5" placeholder="Message"></textarea>
-
-            <button type="button" className="w-full rounded-2xl bg-cyan-400 py-4 font-black text-black hover:bg-cyan-300">
-              Submit Enquiry
-            </button>
-          </form>
+          <ContactForm />
         </div>
       </section>
 

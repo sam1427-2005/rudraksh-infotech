@@ -8,7 +8,13 @@ export async function POST(req) {
 
     const body = await req.json();
 
-    const enquiry = await Contact.create(body);
+    const enquiry = await Contact.create({
+      name: body.name,
+      email: body.email,
+      phone: body.phone,
+      domain: body.domain,
+      message: body.message,
+    });
 
     return NextResponse.json({
       success: true,
@@ -16,10 +22,25 @@ export async function POST(req) {
     });
   } catch (error) {
     return NextResponse.json(
-      {
-        success: false,
-        error: error.message,
-      },
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    await connectDB();
+
+    const enquiries = await Contact.find().sort({ createdAt: -1 });
+
+    return NextResponse.json({
+      success: true,
+      enquiries,
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: error.message },
       { status: 500 }
     );
   }

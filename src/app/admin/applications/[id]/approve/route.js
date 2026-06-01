@@ -1,30 +1,22 @@
-import { redirect } from "next/navigation";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Application from "@/models/Application";
-import { sendMail } from "@/lib/sendMail";
 
-export async function POST(req, { params }) {
-  await connectDB();
+export async function POST(req, context) {
+  try {
+    await connectDB();
 
-  const application = await Application.findByIdAndUpdate(
-    params.id,
-    { status: "Approved" },
-    { new: true }
-  );
+    const { id } = await context.params;
 
-  if (application?.email) {
-    await sendMail({
-      to: application.email,
-      subject: "Internship Application Approved - Rudraksh Infotech",
-      html: `
-        <h2>Congratulations ${application.name}!</h2>
-        <p>Your internship application for <b>${application.domain}</b> has been approved.</p>
-        <p>Our team will contact you soon with further instructions.</p>
-        <br/>
-        <p>Regards,<br/>Rudraksh Infotech</p>
-      `,
+    await Application.findByIdAndUpdate(id, {
+      $set: { status: "Approved" },
     });
-  }
 
-  redirect("/admin/applications");
+    return NextResponse.redirect(new URL("/admin/applications", req.url));
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
+  }
 }

@@ -10,12 +10,12 @@ export default function StatusUpdater({ id, currentStatus }) {
     setLoading(true);
 
     try {
+      const formData = new FormData();
+      formData.append("status", status);
+
       const res = await fetch(`/api/applications/${id}/status`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status }),
+        method: "POST",
+        body: formData,
       });
 
       const data = await res.json();
@@ -27,7 +27,7 @@ export default function StatusUpdater({ id, currentStatus }) {
       }
 
       alert("Status updated successfully");
-      window.location.href = "/admin/applications";
+      window.location.reload();
     } catch (error) {
       alert("API error: " + error.message);
     }
@@ -38,6 +38,8 @@ export default function StatusUpdater({ id, currentStatus }) {
   return (
     <div className="flex gap-2">
       <select
+        id={`status-${id}`}
+        name={`status-${id}`}
         value={status}
         onChange={(e) => setStatus(e.target.value)}
         className="rounded-lg bg-slate-800 px-3 py-2 text-sm text-white"
@@ -51,7 +53,7 @@ export default function StatusUpdater({ id, currentStatus }) {
         type="button"
         onClick={updateStatus}
         disabled={loading}
-        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black"
+        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black disabled:opacity-60"
       >
         {loading ? "Saving..." : "Save"}
       </button>

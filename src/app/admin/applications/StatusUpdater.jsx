@@ -10,24 +10,15 @@ export default function StatusUpdater({ id, currentStatus }) {
     setLoading(true);
 
     try {
-      const res = await fetch(`/api/applications/${id}/status`, {
+      const res = await fetch("/api/update-status", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ id, status }),
       });
 
-      const text = await res.text();
-      console.log("STATUS API RESPONSE:", text);
-
-      if (!text) {
-        alert("Empty response from server");
-        setLoading(false);
-        return;
-      }
-
-      const data = JSON.parse(text);
+      const data = await res.json();
 
       if (!res.ok || !data.success) {
         alert(data.error || "Status update failed");

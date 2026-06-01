@@ -23,12 +23,8 @@ export default async function AdminApplications() {
   const applications = await getApplications();
 
   const totalApplications = applications.length;
-  const totalApproved = applications.filter(
-    (app) => app.status === "Approved"
-  ).length;
-  const totalRejected = applications.filter(
-    (app) => app.status === "Rejected"
-  ).length;
+  const totalApproved = applications.filter((app) => app.status === "Approved").length;
+  const totalRejected = applications.filter((app) => app.status === "Rejected").length;
   const totalPending = applications.filter(
     (app) => !app.status || app.status === "Pending"
   ).length;
@@ -38,29 +34,39 @@ export default async function AdminApplications() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#020617] px-4 py-10 text-white sm:px-6">
+    <main className="min-h-screen bg-[#020617] px-4 py-8 text-white sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+        <div className="mb-8 flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <h1 className="text-3xl font-black text-cyan-400 sm:text-4xl">
-              Admin Dashboard
+            <p className="mb-2 text-sm font-semibold text-cyan-400">
+              Rudraksh Infotech Admin
+            </p>
+            <h1 className="text-3xl font-black text-white sm:text-4xl">
+              Internship Applications
             </h1>
-            <p className="mt-2 text-slate-400">
-              Internship applications received by Rudraksh Infotech.
+            <p className="mt-2 text-sm text-slate-400 sm:text-base">
+              Manage applications, status, exports and enquiries.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <a
+              href="/admin/enquiries"
+              className="rounded-xl bg-purple-500 px-5 py-3 text-center font-bold text-white hover:bg-purple-400"
+            >
+              View Enquiries
+            </a>
+
             <a
               href="/api/export/excel"
-              className="rounded-xl bg-green-400 px-4 py-3 font-bold text-black"
+              className="rounded-xl bg-green-400 px-5 py-3 text-center font-bold text-black hover:bg-green-300"
             >
               Export Excel
             </a>
 
             <a
               href="/api/export/pdf"
-              className="rounded-xl bg-cyan-400 px-4 py-3 font-bold text-black"
+              className="rounded-xl bg-cyan-400 px-5 py-3 text-center font-bold text-black hover:bg-cyan-300"
             >
               Export PDF
             </a>
@@ -68,32 +74,32 @@ export default async function AdminApplications() {
         </div>
 
         <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl bg-white/5 p-6">
-            <h2 className="text-3xl font-bold text-cyan-400">
+          <div className="rounded-2xl border border-white/10 bg-cyan-500/10 p-5">
+            <h2 className="text-3xl font-black text-cyan-400">
               {totalApplications}
             </h2>
-            <p className="text-slate-400">Total Applications</p>
+            <p className="text-sm text-slate-400">Total Applications</p>
           </div>
 
-          <div className="rounded-2xl bg-yellow-500/10 p-6">
-            <h2 className="text-3xl font-bold text-yellow-400">
+          <div className="rounded-2xl border border-white/10 bg-yellow-500/10 p-5">
+            <h2 className="text-3xl font-black text-yellow-400">
               {totalPending}
             </h2>
-            <p className="text-slate-400">Pending</p>
+            <p className="text-sm text-slate-400">Pending</p>
           </div>
 
-          <div className="rounded-2xl bg-green-500/10 p-6">
-            <h2 className="text-3xl font-bold text-green-400">
+          <div className="rounded-2xl border border-white/10 bg-green-500/10 p-5">
+            <h2 className="text-3xl font-black text-green-400">
               {totalApproved}
             </h2>
-            <p className="text-slate-400">Approved</p>
+            <p className="text-sm text-slate-400">Approved</p>
           </div>
 
-          <div className="rounded-2xl bg-red-500/10 p-6">
-            <h2 className="text-3xl font-bold text-red-400">
+          <div className="rounded-2xl border border-white/10 bg-red-500/10 p-5">
+            <h2 className="text-3xl font-black text-red-400">
               {totalRejected}
             </h2>
-            <p className="text-slate-400">Rejected</p>
+            <p className="text-sm text-slate-400">Rejected</p>
           </div>
         </div>
 
@@ -101,12 +107,12 @@ export default async function AdminApplications() {
           <input
             id="searchInput"
             placeholder="Search by name, email, phone..."
-            className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base"
           />
 
           <select
             id="domainFilter"
-            className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base"
           >
             <option value="">All Domains</option>
             {domains.map((domain) => (
@@ -118,7 +124,7 @@ export default async function AdminApplications() {
 
           <select
             id="statusFilter"
-            className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-cyan-400 sm:text-base"
           >
             <option value="">All Status</option>
             <option value="Pending">Pending</option>
@@ -127,9 +133,9 @@ export default async function AdminApplications() {
           </select>
         </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.04]">
-          <table className="w-full min-w-[1000px] text-left" id="applicationsTable">
-            <thead className="bg-white/10">
+        <div className="overflow-x-auto rounded-3xl border border-white/10 bg-white/[0.04]">
+          <table className="w-full min-w-[1050px] text-left">
+            <thead className="bg-white/10 text-sm text-slate-300">
               <tr>
                 <th className="p-4">Name</th>
                 <th className="p-4">Email</th>
@@ -137,6 +143,7 @@ export default async function AdminApplications() {
                 <th className="p-4">College</th>
                 <th className="p-4">Domain</th>
                 <th className="p-4">Status</th>
+                <th className="p-4">Update Status</th>
                 <th className="p-4">Actions</th>
               </tr>
             </thead>
@@ -144,7 +151,7 @@ export default async function AdminApplications() {
             <tbody>
               {applications.length === 0 ? (
                 <tr>
-                  <td colSpan="7" className="p-6 text-center text-slate-400">
+                  <td colSpan="8" className="p-8 text-center text-slate-400">
                     No Applications Found
                   </td>
                 </tr>
@@ -157,9 +164,9 @@ export default async function AdminApplications() {
                     data-phone={app.phone || ""}
                     data-domain={app.domain || ""}
                     data-status={app.status || "Pending"}
-                    className="application-row border-t border-white/10"
+                    className="application-row border-t border-white/10 text-sm"
                   >
-                    <td className="p-4">{app.name}</td>
+                    <td className="p-4 font-semibold">{app.name}</td>
                     <td className="p-4">{app.email}</td>
                     <td className="p-4">{app.phone}</td>
                     <td className="p-4">{app.college}</td>
@@ -180,15 +187,37 @@ export default async function AdminApplications() {
                     </td>
 
                     <td className="p-4">
+                      <form
+                        action={`/admin/applications/${app._id}/status`}
+                        method="POST"
+                        className="flex gap-2"
+                      >
+                        <select
+                          name="status"
+                          defaultValue={app.status || "Pending"}
+                          className="rounded-lg bg-slate-800 px-3 py-2 text-sm text-white"
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Approved">Approved</option>
+                          <option value="Rejected">Rejected</option>
+                        </select>
+
+                        <button
+                          type="submit"
+                          className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black hover:bg-cyan-300"
+                        >
+                          Save
+                        </button>
+                      </form>
+                    </td>
+
+                    <td className="p-4">
                       <div className="flex flex-wrap gap-2">
                         <form
                           action={`/admin/applications/${app._id}/approve`}
                           method="POST"
                         >
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white hover:bg-green-400"
-                          >
+                          <button className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white hover:bg-green-400">
                             Approve
                           </button>
                         </form>
@@ -197,10 +226,7 @@ export default async function AdminApplications() {
                           action={`/admin/applications/${app._id}/reject`}
                           method="POST"
                         >
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black hover:bg-yellow-400"
-                          >
+                          <button className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black hover:bg-yellow-400">
                             Reject
                           </button>
                         </form>
@@ -209,10 +235,7 @@ export default async function AdminApplications() {
                           action={`/admin/applications/${app._id}/delete`}
                           method="POST"
                         >
-                          <button
-                            type="submit"
-                            className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white hover:bg-red-400"
-                          >
+                          <button className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white hover:bg-red-400">
                             Delete
                           </button>
                         </form>
@@ -254,9 +277,7 @@ export default async function AdminApplications() {
                   const matchesStatus = !status || rowStatus === status;
 
                   row.style.display =
-                    matchesSearch && matchesDomain && matchesStatus
-                      ? ""
-                      : "none";
+                    matchesSearch && matchesDomain && matchesStatus ? "" : "none";
                 });
               }
 

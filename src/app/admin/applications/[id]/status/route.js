@@ -21,7 +21,10 @@ export async function PATCH(req, context) {
     });
   } catch (error) {
     return NextResponse.json(
-      { success: false, error: error.message },
+      {
+        success: false,
+        error: error.message,
+      },
       { status: 500 }
     );
   }

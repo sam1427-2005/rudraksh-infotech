@@ -8,9 +8,11 @@ export async function POST(req, context) {
 
     const { id } = await context.params;
 
-    await Application.findByIdAndUpdate(id, {
-      $set: { status: "Rejected" },
-    });
+    await Application.findByIdAndUpdate(
+      id,
+      { $set: { status: "Rejected" } },
+      { new: true }
+    );
 
     return NextResponse.redirect(new URL("/admin/applications", req.url));
   } catch (error) {

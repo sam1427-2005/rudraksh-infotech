@@ -16,49 +16,54 @@ export async function POST(req, context) {
     );
 
     if (application?.email) {
-      await sendMail({
-        to: application.email,
-        subject: "Internship Application Approved - Rudraksh Infotech",
-        html: `
-          <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111827;">
-            <h2 style="color:#0891b2;">Congratulations ${application.name}!</h2>
+      try {
+        await sendMail({
+          to: application.email,
+          subject: "Internship Application Approved - Rudraksh Infotech",
+          html: `
+            <div style="font-family:Arial,sans-serif;line-height:1.6;color:#111827;">
+              <h2 style="color:#0891b2;">Congratulations ${application.name}!</h2>
 
-            <p>Dear <b>${application.name}</b>,</p>
+              <p>Dear <b>${application.name}</b>,</p>
 
-            <p>
-              We are pleased to inform you that your internship application for
-              <b>${application.domain}</b> has been approved by
-              <b>Rudraksh Infotech</b>.
-            </p>
+              <p>
+                Your internship application for <b>${application.domain}</b>
+                has been approved by <b>Rudraksh Infotech</b>.
+              </p>
 
-            <p>
-              Please join the official WhatsApp group for onboarding updates,
-              project instructions, internship schedule and announcements.
-            </p>
+              <p>
+                Please join the official WhatsApp group for onboarding updates,
+                project instructions and internship schedule.
+              </p>
 
-            <p>
-              <a href="https://chat.whatsapp.com/F07dXCn0TZlBvWjtLs1ygo?s=cl&p=a&mlu=0"
-                 style="display:inline-block;background:#22c55e;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
-                Join WhatsApp Group
-              </a>
-            </p>
+              <p>
+                <a href="https://chat.whatsapp.com/F07dXCn0TZlBvWjtLs1ygo?s=cl&p=a&mlu=0"
+                  style="display:inline-block;background:#22c55e;color:white;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:bold;">
+                  Join WhatsApp Group
+                </a>
+              </p>
 
-            <p><b>Internship Status:</b> Approved</p>
+              <p><b>Status:</b> Approved</p>
 
-            <br/>
+              <br/>
 
-            <p>
-              Regards,<br/>
-              <b>Rudraksh Infotech</b><br/>
-              Software House & IT Solutions
-            </p>
-          </div>
-        `,
-      });
+              <p>
+                Regards,<br/>
+                <b>Rudraksh Infotech</b><br/>
+                Software House & IT Solutions
+              </p>
+            </div>
+          `,
+        });
+      } catch (mailError) {
+        console.log("Mail failed:", mailError.message);
+      }
     }
 
     return NextResponse.redirect(new URL("/admin/applications", req.url));
   } catch (error) {
+    console.log("Approve error:", error.message);
+
     return NextResponse.json(
       { success: false, error: error.message },
       { status: 500 }

@@ -1,3 +1,6 @@
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { headers } from "next/headers";
 
 async function getApplications() {
@@ -8,6 +11,7 @@ async function getApplications() {
 
     const res = await fetch(`${protocol}://${host}/api/applications`, {
       cache: "no-store",
+      next: { revalidate: 0 },
     });
 
     if (!res.ok) return [];
@@ -217,7 +221,10 @@ export default async function AdminApplications() {
                           action={`/admin/applications/${app._id}/approve`}
                           method="POST"
                         >
-                          <button className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white hover:bg-green-400">
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white hover:bg-green-400"
+                          >
                             Approve
                           </button>
                         </form>
@@ -226,7 +233,10 @@ export default async function AdminApplications() {
                           action={`/admin/applications/${app._id}/reject`}
                           method="POST"
                         >
-                          <button className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black hover:bg-yellow-400">
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black hover:bg-yellow-400"
+                          >
                             Reject
                           </button>
                         </form>
@@ -235,7 +245,10 @@ export default async function AdminApplications() {
                           action={`/admin/applications/${app._id}/delete`}
                           method="POST"
                         >
-                          <button className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white hover:bg-red-400">
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white hover:bg-red-400"
+                          >
                             Delete
                           </button>
                         </form>

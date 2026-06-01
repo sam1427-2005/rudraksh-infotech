@@ -9,7 +9,7 @@ export async function sendMail({ to, subject, html }) {
     },
   });
 
-  await transporter.sendMail({
+  return transporter.sendMail({
     from: `"Rudraksh Infotech" <${process.env.EMAIL_USER}>`,
     to,
     subject,

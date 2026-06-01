@@ -11,7 +11,7 @@ export default function StatusUpdater({ id, currentStatus }) {
 
     try {
       const res = await fetch(`/api/applications/${id}/status`, {
-        method: "PATCH",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -22,7 +22,7 @@ export default function StatusUpdater({ id, currentStatus }) {
       console.log("STATUS API RESPONSE:", text);
 
       if (!text) {
-        alert("Empty response from server. Check Vercel logs.");
+        alert("Empty response from server");
         setLoading(false);
         return;
       }
@@ -62,7 +62,7 @@ export default function StatusUpdater({ id, currentStatus }) {
         type="button"
         onClick={updateStatus}
         disabled={loading}
-        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black"
+        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black disabled:opacity-60"
       >
         {loading ? "Saving..." : "Save"}
       </button>

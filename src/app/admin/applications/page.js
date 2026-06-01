@@ -14,7 +14,7 @@ async function getApplications() {
 
     const data = await res.json();
     return data.applications || [];
-  } catch (error) {
+  } catch {
     return [];
   }
 }
@@ -33,14 +33,16 @@ export default async function AdminApplications() {
     (app) => !app.status || app.status === "Pending"
   ).length;
 
-  const domains = [...new Set(applications.map((app) => app.domain).filter(Boolean))];
+  const domains = [
+    ...new Set(applications.map((app) => app.domain).filter(Boolean)),
+  ];
 
   return (
-    <main className="min-h-screen bg-[#020617] px-6 py-12 text-white">
+    <main className="min-h-screen bg-[#020617] px-4 py-10 text-white sm:px-6">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
+        <div className="mb-8 flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
           <div>
-            <h1 className="text-4xl font-black text-cyan-400">
+            <h1 className="text-3xl font-black text-cyan-400 sm:text-4xl">
               Admin Dashboard
             </h1>
             <p className="mt-2 text-slate-400">
@@ -48,13 +50,14 @@ export default async function AdminApplications() {
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <a
               href="/api/export/excel"
               className="rounded-xl bg-green-400 px-4 py-3 font-bold text-black"
             >
               Export Excel
             </a>
+
             <a
               href="/api/export/pdf"
               className="rounded-xl bg-cyan-400 px-4 py-3 font-bold text-black"
@@ -64,7 +67,7 @@ export default async function AdminApplications() {
           </div>
         </div>
 
-        <div className="mb-8 grid gap-4 md:grid-cols-4">
+        <div className="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-2xl bg-white/5 p-6">
             <h2 className="text-3xl font-bold text-cyan-400">
               {totalApplications}
@@ -125,7 +128,7 @@ export default async function AdminApplications() {
         </div>
 
         <div className="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.04]">
-          <table className="w-full text-left" id="applicationsTable">
+          <table className="w-full min-w-[1000px] text-left" id="applicationsTable">
             <thead className="bg-white/10">
               <tr>
                 <th className="p-4">Name</th>
@@ -176,24 +179,44 @@ export default async function AdminApplications() {
                       </span>
                     </td>
 
-                    <td className="flex gap-2 p-4">
-                      <form action={`/api/applications/${app._id}/approve`} method="POST">
-                        <button className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white">
-                          Approve
-                        </button>
-                      </form>
+                    <td className="p-4">
+                      <div className="flex flex-wrap gap-2">
+                        <form
+                          action={`/admin/applications/${app._id}/approve`}
+                          method="POST"
+                        >
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-green-500 px-3 py-2 text-sm font-bold text-white hover:bg-green-400"
+                          >
+                            Approve
+                          </button>
+                        </form>
 
-                      <form action={`/api/applications/${app._id}/reject`} method="POST">
-                        <button className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black">
-                          Reject
-                        </button>
-                      </form>
+                        <form
+                          action={`/admin/applications/${app._id}/reject`}
+                          method="POST"
+                        >
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-yellow-500 px-3 py-2 text-sm font-bold text-black hover:bg-yellow-400"
+                          >
+                            Reject
+                          </button>
+                        </form>
 
-                      <form action={`/api/applications/${app._id}/delete`} method="POST">
-                        <button className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white">
-                          Delete
-                        </button>
-                      </form>
+                        <form
+                          action={`/admin/applications/${app._id}/delete`}
+                          method="POST"
+                        >
+                          <button
+                            type="submit"
+                            className="rounded-lg bg-red-500 px-3 py-2 text-sm font-bold text-white hover:bg-red-400"
+                          >
+                            Delete
+                          </button>
+                        </form>
+                      </div>
                     </td>
                   </tr>
                 ))
@@ -237,9 +260,9 @@ export default async function AdminApplications() {
                 });
               }
 
-              searchInput.addEventListener("input", filterRows);
-              domainFilter.addEventListener("change", filterRows);
-              statusFilter.addEventListener("change", filterRows);
+              searchInput?.addEventListener("input", filterRows);
+              domainFilter?.addEventListener("change", filterRows);
+              statusFilter?.addEventListener("change", filterRows);
             `,
           }}
         />

@@ -1,2 +1,14 @@
 https://rudraksh-infotech-71vs.vercel.app/admin/applications
 admin
+
+
+D:
+cd rudraksh-infotech
+#github push code
+git status
+
+git add .
+
+git commit -m "Update Rudraksh Infotech website"
+
+git push origin main

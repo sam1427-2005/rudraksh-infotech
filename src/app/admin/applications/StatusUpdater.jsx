@@ -20,13 +20,16 @@ export default function StatusUpdater({ id, currentStatus }) {
 
       const data = await res.json();
 
-      if (data.success) {
-        window.location.reload();
-      } else {
-        alert("Status update failed");
+      if (!data.success) {
+        alert(data.error || "Status update failed");
+        setLoading(false);
+        return;
       }
-    } catch {
-      alert("API error");
+
+      alert("Status updated successfully");
+      window.location.href = "/admin/applications";
+    } catch (error) {
+      alert("API error: " + error.message);
     }
 
     setLoading(false);
@@ -48,7 +51,7 @@ export default function StatusUpdater({ id, currentStatus }) {
         type="button"
         onClick={updateStatus}
         disabled={loading}
-        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black hover:bg-cyan-300 disabled:opacity-60"
+        className="rounded-lg bg-cyan-400 px-3 py-2 text-sm font-bold text-black"
       >
         {loading ? "Saving..." : "Save"}
       </button>

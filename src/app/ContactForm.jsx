@@ -12,17 +12,18 @@ export default function ContactForm() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   function handleChange(e) {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setForm({ ...form, [e.target.name]: e.target.value });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
+    setSuccess("");
+    setErrorMsg("");
 
     try {
       const res = await fetch("/api/contact", {
@@ -36,12 +37,13 @@ export default function ContactForm() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        alert(data.error || "Enquiry submit failed");
+        setErrorMsg(data.error || "Enquiry submit failed");
         setLoading(false);
         return;
       }
 
-      alert("Enquiry submitted successfully!");
+      setSuccess("✅ Enquiry submitted successfully! Our team will contact you soon.");
+
       setForm({
         name: "",
         email: "",
@@ -50,7 +52,7 @@ export default function ContactForm() {
         message: "",
       });
     } catch (error) {
-      alert("Something went wrong: " + error.message);
+      setErrorMsg("Something went wrong. Please try again.");
     }
 
     setLoading(false);
@@ -61,52 +63,27 @@ export default function ContactForm() {
       onSubmit={handleSubmit}
       className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-5 sm:p-8"
     >
-      <input
-        name="name"
-        value={form.name}
-        onChange={handleChange}
-        required
-        className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base"
-        placeholder="Full Name"
-      />
+      {success && (
+        <div className="mb-4 rounded-xl border border-green-400/30 bg-green-500/10 px-4 py-3 text-sm font-semibold text-green-300">
+          {success}
+        </div>
+      )}
 
-      <input
-        name="email"
-        type="email"
-        value={form.email}
-        onChange={handleChange}
-        required
-        className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base"
-        placeholder="Email Address"
-      />
+      {errorMsg && (
+        <div className="mb-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-semibold text-red-300">
+          {errorMsg}
+        </div>
+      )}
 
-      <input
-        name="phone"
-        value={form.phone}
-        onChange={handleChange}
-        required
-        className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base"
-        placeholder="Phone Number"
-      />
+      <input name="name" value={form.name} onChange={handleChange} required className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Full Name" />
 
-      <input
-        name="domain"
-        value={form.domain}
-        onChange={handleChange}
-        required
-        className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base"
-        placeholder="Service / Internship Domain"
-      />
+      <input name="email" type="email" value={form.email} onChange={handleChange} required className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Email Address" />
 
-      <textarea
-        name="message"
-        value={form.message}
-        onChange={handleChange}
-        required
-        className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base"
-        rows="5"
-        placeholder="Message"
-      />
+      <input name="phone" value={form.phone} onChange={handleChange} required className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Phone Number" />
+
+      <input name="domain" value={form.domain} onChange={handleChange} required className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" placeholder="Service / Internship Domain" />
+
+      <textarea name="message" value={form.message} onChange={handleChange} required className="mb-4 w-full rounded-2xl border border-white/10 bg-black/30 px-5 py-4 text-sm outline-none focus:border-cyan-400 sm:text-base" rows="5" placeholder="Message" />
 
       <button
         type="submit"
